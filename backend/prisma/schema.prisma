@@ -1,0 +1,94 @@
+// Prisma Schema - OliTrack Database
+// 4 core tables: users, vehicles, oil_history, reminder_settings
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// USERS — Authentication & profile
+// ============================================================
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt      @map("updated_at")
+
+  // Relations
+  vehicles Vehicle[]
+
+  @@map("users")
+}
+
+// ============================================================
+// VEHICLES — Motor/Mobil milik user
+// ============================================================
+model Vehicle {
+  id           Int         @id @default(autoincrement())
+  userId       Int         @map("user_id")
+  name         String
+  type         VehicleType
+  licensePlate String      @unique @map("license_plate")
+  brand        String
+  year         Int
+  icon         String?
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt      @map("updated_at")
+
+  // Relations
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  oilHistories     OilHistory[]
+  reminderSettings ReminderSettings?
+
+  @@map("vehicles")
+}
+
+enum VehicleType {
+  MOTORCYCLE
+  CAR
+}
+
+// ============================================================
+// OIL_HISTORY — Riwayat penggantian oli
+// ============================================================
+model OilHistory {
+  id         Int      @id @default(autoincrement())
+  vehicleId  Int      @map("vehicle_id")
+  changeDate DateTime @map("change_date")
+  odometer   Int
+  oilType    String   @map("oil_type")
+  price      Decimal  @db.Decimal(12, 2)
+  workshop   String
+  notes      String?  @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt      @map("updated_at")
+
+  // Relations
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("oil_history")
+}
+
+// ============================================================
+// REMINDER_SETTINGS — Interval kustom per kendaraan
+// ============================================================
+model ReminderSettings {
+  id            Int      @id @default(autoincrement())
+  vehicleId     Int      @unique        @map("vehicle_id")
+  kmInterval    Int      @default(3000) @map("km_interval")
+  monthInterval Int      @default(3)    @map("month_interval")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt      @map("updated_at")
+
+  // Relations
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("reminder_settings")
+}

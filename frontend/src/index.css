@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background:  #0F1115;
+    --foreground:  #F1F5F9;
+    --surface:     #161A22;
+    --surface-high: #1E2330;
+    --border:      #2A2F3E;
+    --accent:      #F97316;
+    --muted:       #6B7280;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background-color: #0F1115;
+    color: #F1F5F9;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #0F1115; }
+  ::-webkit-scrollbar-thumb { background: #2A2F3E; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #F97316; }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-border rounded-card shadow-card;
+  }
+
+  .btn-primary {
+    @apply bg-accent hover:bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg 
+           transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-surfaceHigh text-foreground px-4 py-2 rounded-lg 
+           transition-all duration-200 border border-border;
+  }
+
+  .btn-danger {
+    @apply bg-danger/10 hover:bg-danger/20 text-danger border border-danger/30 
+           px-4 py-2 rounded-lg transition-all duration-200;
+  }
+
+  .input-field {
+    @apply w-full bg-surfaceHigh border border-border rounded-lg px-4 py-2.5 text-foreground
+           placeholder:text-muted focus:outline-none focus:border-accent focus:ring-1 
+           focus:ring-accent/30 transition-all duration-200;
+  }
+
+  .label {
+    @apply text-sm font-medium text-foreground/80 mb-1.5 block;
+  }
+
+  .status-badge-green  { @apply bg-success/20 text-success border-success/30 border rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .status-badge-yellow { @apply bg-warning/20 text-warning border-warning/30 border rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .status-badge-red    { @apply bg-danger/20  text-danger  border-danger/30  border rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+
+  .skeleton {
+    @apply bg-surfaceHigh animate-pulse rounded-lg;
+  }
+
+  .page-enter {
+    animation: slideUp 0.35s ease-out;
+  }
+}
