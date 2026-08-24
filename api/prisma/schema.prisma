@@ -36,7 +36,7 @@ model Vehicle {
   userId       Int         @map("user_id")
   name         String
   type         VehicleType
-  licensePlate String      @unique @map("license_plate")
+  licensePlate String      @map("license_plate")
   brand        String
   year         Int
   icon         String?
@@ -48,6 +48,7 @@ model Vehicle {
   oilHistories     OilHistory[]
   reminderSettings ReminderSettings?
 
+  @@unique([userId, licensePlate])
   @@map("vehicles")
 }
 
