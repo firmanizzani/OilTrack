@@ -41,10 +41,10 @@ const createVehicle = async (req, res) => {
 
   const { name, type, licensePlate, brand, year, icon, kmInterval, monthInterval } = req.body;
 
-  // Check license plate uniqueness
-  const existing = await prisma.vehicle.findUnique({ where: { licensePlate } });
+  // Check license plate uniqueness per user
+  const existing = await prisma.vehicle.findFirst({ where: { userId: req.user.id, licensePlate } });
   if (existing) {
-    return errorResponse(res, 'License plate already registered.', 409);
+    return errorResponse(res, 'Plat nomor sudah terdaftar di akun Anda.', 409);
   }
 
   // Create vehicle and default reminder settings in a transaction
@@ -120,10 +120,10 @@ const updateVehicle = async (req, res) => {
 
   const { name, type, licensePlate, brand, year, icon, kmInterval, monthInterval } = req.body;
 
-  // If license plate changed, check uniqueness
+  // If license plate changed, check uniqueness per user
   if (licensePlate && licensePlate !== existing.licensePlate) {
-    const dup = await prisma.vehicle.findUnique({ where: { licensePlate } });
-    if (dup) return errorResponse(res, 'License plate already registered.', 409);
+    const dup = await prisma.vehicle.findFirst({ where: { userId: req.user.id, licensePlate } });
+    if (dup) return errorResponse(res, 'Plat nomor sudah terdaftar di akun Anda.', 409);
   }
 
   const vehicle = await prisma.$transaction(async (tx) => {
