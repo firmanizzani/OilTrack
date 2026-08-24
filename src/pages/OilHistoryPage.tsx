@@ -119,7 +119,7 @@ export default function OilHistoryPage() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari bengkel..."
+              placeholder="Cari riwayat ganti oli..."
               className="input-field pl-10"
             />
           </div>
