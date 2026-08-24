@@ -48,13 +48,13 @@ const getDashboard = async (req, res) => {
 
   const monthlyRaw = await prisma.$queryRaw`
     SELECT
-      DATE_FORMAT(oh.change_date, '%Y-%m') AS month,
-      SUM(oh.price)                        AS total
+      TO_CHAR(oh.change_date, 'YYYY-MM') AS month,
+      SUM(oh.price)                      AS total
     FROM oil_history oh
     INNER JOIN vehicles v ON oh.vehicle_id = v.id
     WHERE v.user_id    = ${userId}
       AND oh.change_date >= ${sixMonthsAgo}
-    GROUP BY DATE_FORMAT(oh.change_date, '%Y-%m')
+    GROUP BY TO_CHAR(oh.change_date, 'YYYY-MM')
     ORDER BY month ASC
   `;
 
