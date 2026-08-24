@@ -9,6 +9,7 @@ import DashboardPage from '@/pages/DashboardPage';
 import VehiclesPage from '@/pages/VehiclesPage';
 import VehicleDetailPage from '@/pages/VehicleDetailPage';
 import OilHistoryPage from '@/pages/OilHistoryPage';
+import ProfilePage from '@/pages/ProfilePage';
 
 // Layout
 import AppLayout from '@/components/layout/AppLayout';
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/vehicles"           element={<VehiclesPage />} />
           <Route path="/vehicles/:id"       element={<VehicleDetailPage />} />
           <Route path="/oil-history"        element={<OilHistoryPage />} />
+          <Route path="/profile"            element={<ProfilePage />} />
         </Route>
 
         {/* Fallback */}

@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Car, Droplets } from 'lucide-react';
+import { LayoutDashboard, Car, Droplets, User } from 'lucide-react';
 import { cn } from '@/utils';
 
 const navItems = [
   { to: '/dashboard',   label: 'Dashboard', icon: LayoutDashboard },
   { to: '/vehicles',    label: 'Kendaraan', icon: Car },
   { to: '/oil-history', label: 'Riwayat',   icon: Droplets },
+  { to: '/profile',     label: 'Profil',    icon: User },
 ];
 
 export default function BottomNav() {
