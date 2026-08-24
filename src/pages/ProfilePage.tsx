@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { User, Mail, LogOut, Gauge, Shield } from 'lucide-react';
+import { User, Mail, LogOut, Gauge } from 'lucide-react';
 import { useAuthStore } from '@/hooks/useAuthStore';
 
 export default function ProfilePage() {
@@ -58,16 +58,8 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-3.5">
-          <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
-            <Shield className="w-4 h-4 text-accent" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-xs text-muted">Role</p>
-            <p className="text-sm font-medium text-foreground capitalize">{user?.role ?? 'User'}</p>
-          </div>
-        </div>
       </div>
+
 
       {/* App info */}
       <div className="bg-surface border border-border rounded-2xl p-4 flex items-center gap-3">
