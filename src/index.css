@@ -4,13 +4,29 @@
 
 @layer base {
   :root {
-    --background:  #0F1115;
-    --foreground:  #F1F5F9;
-    --surface:     #161A22;
+    --background:   #F8FAFC;
+    --foreground:   #0F172A;
+    --surface:      #FFFFFF;
+    --surface-high: #F1F5F9;
+    --border:       #E2E8F0;
+    --accent:       #F97316;
+    --muted:        #64748B;
+    --card-shadow:  0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    --scrollbar-track: #F8FAFC;
+    --scrollbar-thumb: #CBD5E1;
+  }
+
+  .dark {
+    --background:   #0F1115;
+    --foreground:   #F1F5F9;
+    --surface:      #161A22;
     --surface-high: #1E2330;
-    --border:      #2A2F3E;
-    --accent:      #F97316;
-    --muted:       #6B7280;
+    --border:       #2A2F3E;
+    --accent:       #F97316;
+    --muted:        #6B7280;
+    --card-shadow:  0 2px 16px 0 rgba(0, 0, 0, 0.4);
+    --scrollbar-track: #0F1115;
+    --scrollbar-thumb: #2A2F3E;
   }
 
   * {
@@ -18,17 +34,18 @@
   }
 
   body {
-    background-color: #0F1115;
-    color: #F1F5F9;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   /* Custom scrollbar */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: #0F1115; }
-  ::-webkit-scrollbar-thumb { background: #2A2F3E; border-radius: 3px; }
+  ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: #F97316; }
 }
 
@@ -59,7 +76,7 @@
   }
 
   .label {
-    @apply text-sm font-medium text-foreground/80 mb-1.5 block;
+    @apply text-sm font-medium text-foreground opacity-80 mb-1.5 block;
   }
 
   .status-badge-green  { @apply bg-success/20 text-success border-success/30 border rounded-full px-2.5 py-0.5 text-xs font-semibold; }

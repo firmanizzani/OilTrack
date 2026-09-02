@@ -5,16 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background:  '#0F1115',
-        surface:     '#161A22',
-        surfaceHigh: '#1E2330',
-        border:      '#2A2F3E',
+        background:  'var(--background)',
+        surface:     'var(--surface)',
+        surfaceHigh: 'var(--surface-high)',
+        border:      'var(--border)',
         accent:      '#F97316',
         danger:      '#EF4444',
         warning:     '#EAB308',
         success:     '#22C55E',
-        muted:       '#6B7280',
-        foreground:  '#F1F5F9',
+        muted:       'var(--muted)',
+        foreground:  'var(--foreground)',
       },
       borderRadius: {
         card: '12px',
@@ -26,7 +26,7 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        card: '0 2px 16px 0 rgba(0,0,0,0.4)',
+        card: 'var(--card-shadow)',
         glow: '0 0 20px rgba(249,115,22,0.15)',
       },
       animation: {

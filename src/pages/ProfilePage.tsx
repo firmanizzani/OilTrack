@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { User, Mail, LogOut, Gauge } from 'lucide-react';
+import { User, Mail, LogOut, Gauge, Sun, Moon } from 'lucide-react';
 import { useAuthStore } from '@/hooks/useAuthStore';
+import { useThemeStore } from '@/hooks/useThemeStore';
 
 export default function ProfilePage() {
   const { user, logout } = useAuthStore();
+  const { theme, toggleTheme } = useThemeStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -42,7 +44,7 @@ export default function ProfilePage() {
           <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
             <User className="w-4 h-4 text-accent" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-xs text-muted">Nama</p>
             <p className="text-sm font-medium text-foreground truncate">{user?.name}</p>
           </div>
@@ -52,12 +54,35 @@ export default function ProfilePage() {
           <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
             <Mail className="w-4 h-4 text-accent" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-xs text-muted">Email</p>
             <p className="text-sm font-medium text-foreground truncate">{user?.email}</p>
           </div>
         </div>
 
+        <button
+          onClick={toggleTheme}
+          className="w-full flex items-center justify-between gap-3 px-4 py-3.5 hover:bg-surfaceHigh transition-colors text-left"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-warning" />
+              ) : (
+                <Moon className="w-4 h-4 text-accent" />
+              )}
+            </div>
+            <div>
+              <p className="text-xs text-muted">Tampilan Theme</p>
+              <p className="text-sm font-medium text-foreground">
+                {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+              </p>
+            </div>
+          </div>
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-accent/15 text-accent">
+            Ganti
+          </span>
+        </button>
       </div>
 
 

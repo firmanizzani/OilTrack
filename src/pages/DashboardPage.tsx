@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import {
-  Car, Droplets, TrendingUp, Wallet, AlertTriangle, Clock, Plus,
+  Car, Droplets, TrendingUp, Wallet, AlertTriangle, Clock, Plus, Sun, Moon,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { dashboardService } from '@/services/dashboardService';
 import { useAuthStore } from '@/hooks/useAuthStore';
+import { useThemeStore } from '@/hooks/useThemeStore';
 import { StatsSkeleton, TableSkeleton } from '@/components/ui/Skeleton';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -18,6 +19,7 @@ import {
 
 export default function DashboardPage() {
   const user = useAuthStore((s) => s.user);
+  const { theme, toggleTheme } = useThemeStore();
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -73,11 +75,32 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 page-enter">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">
-          Selamat datang, {user?.name?.split(' ')[0]} 👋
-        </h1>
-        <p className="text-muted text-sm mt-1">Ringkasan kendaraan dan pengeluaran oli kamu</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">
+            Selamat datang, {user?.name?.split(' ')[0]} 👋
+          </h1>
+          <p className="text-muted text-sm mt-1">Ringkasan kendaraan dan pengeluaran oli kamu</p>
+        </div>
+
+        {/* Theme Switcher Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface border border-border hover:bg-surfaceHigh text-foreground text-sm font-medium transition-all shadow-sm active:scale-95 cursor-pointer"
+          title={theme === 'dark' ? 'Ganti ke Light Mode' : 'Ganti ke Dark Mode'}
+        >
+          {theme === 'dark' ? (
+            <>
+              <Sun className="w-4 h-4 text-warning" />
+              <span className="hidden sm:inline">Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon className="w-4 h-4 text-accent" />
+              <span className="hidden sm:inline">Dark Mode</span>
+            </>
+          )}
+        </button>
       </div>
 
       {/* Stats cards */}
@@ -121,14 +144,33 @@ export default function DashboardPage() {
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={chartData} barSize={24}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2A2F3E" vertical={false} />
-                <XAxis dataKey="month" tick={{ fill: '#6B7280', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} tick={{ fill: '#6B7280', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke={theme === 'dark' ? '#2A2F3E' : '#E2E8F0'}
+                  vertical={false}
+                />
+                <XAxis
+                  dataKey="month"
+                  tick={{ fill: theme === 'dark' ? '#94A3B8' : '#64748B', fontSize: 11 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
+                  tick={{ fill: theme === 'dark' ? '#94A3B8' : '#64748B', fontSize: 11 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
                 <Tooltip
-                  contentStyle={{ background: '#161A22', border: '1px solid #2A2F3E', borderRadius: 8 }}
-                  labelStyle={{ color: '#F1F5F9', fontSize: 12 }}
+                  contentStyle={{
+                    background: theme === 'dark' ? '#161A22' : '#FFFFFF',
+                    border: `1px solid ${theme === 'dark' ? '#2A2F3E' : '#E2E8F0'}`,
+                    borderRadius: 8,
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  }}
+                  labelStyle={{ color: theme === 'dark' ? '#F1F5F9' : '#0F172A', fontSize: 12 }}
                   formatter={(val: number) => [formatCurrency(val), 'Total']}
-                  cursor={{ fill: '#2A2F3E' }}
+                  cursor={{ fill: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)' }}
                 />
                 <Bar dataKey="total" fill="#F97316" radius={[4, 4, 0, 0]} />
               </BarChart>
