@@ -11,5 +11,5 @@ OliTrack is a web application for recording and monitoring vehicle oil change hi
 
 ## Tech Stack
 **Frontend:** React, TypeScript, Vite, Tailwind CSS, Recharts, Zustand  
-**Backend:** Node.js, Express.js, Prisma ORM, PostgreSQL  
+**Backend:** Node.js, Express.js, Prisma ORM, PostgreSQL (via Supabase)
 **Deployment:** Vercel
