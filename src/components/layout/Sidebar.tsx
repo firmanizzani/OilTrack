@@ -1,10 +1,9 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
-  LayoutDashboard, Car, Droplets, LogOut, Gauge, User, Sun, Moon,
+  LayoutDashboard, Car, Droplets, LogOut, Gauge, User,
 } from 'lucide-react';
 import { useAuthStore } from '@/hooks/useAuthStore';
-import { useThemeStore } from '@/hooks/useThemeStore';
 import { cn } from '@/utils';
 
 const navItems = [
@@ -15,7 +14,6 @@ const navItems = [
 
 export default function Sidebar() {
   const { user, logout } = useAuthStore();
-  const { theme, toggleTheme } = useThemeStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -67,25 +65,8 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* User profile + theme toggle + logout */}
+      {/* User profile + logout */}
       <div className="px-3 pb-4 border-t border-border pt-4 space-y-2">
-        <button
-          onClick={toggleTheme}
-          className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surfaceHigh transition-all duration-200"
-        >
-          {theme === 'dark' ? (
-            <>
-              <Sun className="w-4 h-4 text-warning" />
-              <span>Light Mode</span>
-            </>
-          ) : (
-            <>
-              <Moon className="w-4 h-4 text-accent" />
-              <span>Dark Mode</span>
-            </>
-          )}
-        </button>
-
         <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surfaceHigh">
           <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
             <User className="w-4 h-4 text-accent" />
